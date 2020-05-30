@@ -527,17 +527,11 @@ sudo sed -i "s/dhcp-range=$HSNETSTRING$/dhcp-range=$NEWNETSTRING.150,$NEWNETSTRI
 sudo sed -i "s/dhcp-option=3,$HSIP$/dhcp-option=3,use IP address $NEWIPADDR in VNC to connect/" /etc/dnsmasq.conf
 sudo sed -i "s/address=\/email.com\/$HSIP$/address=\/email.com\/$NEWIPADDR/" /etc/dnsmasq.conf
 
-
-
-yad --text="After connecting to your hotspot wifi\ruse IP address $NEWIPADDR in VNC to connect. " --center --width 300 --height 100 --title="New Hotspot IP" \
---button="OK":1
-ANS=$?
-
-	if [ "$ANS" = 1 ]; then
-	$MAIN
-	exit
- 	fi
+yad --text="After connecting to your hotspot wifi\ruse IP address $NEWIPADDR\rin VNC to connect. " --center --width 300 --height 100 --title="New Hotspot IP" \
+--button=gtk-ok
 fi
+$MAIN &
+exit
 
 }
 
