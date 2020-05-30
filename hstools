@@ -26,7 +26,6 @@ yad --form --width=400 --text="<b>HotSpot Tools</b> by KM4ACK" --text-align=cent
 --field="IP ADDR":RO "$HSIP" \
 --field="FORCE MODE":RO "$FORCE" \
 --field="Change Name/Password":fbtn 'bash -c "kill -USR1 $YAD_PID; source /home/pi/hotspot-tools2/functions; namepwd"' \
---field="Change IP Address":fbtn 'bash -c "kill -USR1 $YAD_PID; source /home/pi/hotspot-tools2/functions; ipaddress"' \
 --field="Run Hotspot Check":fbtn 'bash -c "kill -USR1 $YAD_PID; source /home/pi/hotspot-tools2/functions; hotspot"' \
 --field="Force Hotspot":fbtn 'bash -c "kill -USR1 $YAD_PID; source /home/pi/hotspot-tools2/functions; FORCE"' \
 --field="Undo Force Hotspot":fbtn 'bash -c "kill -USR1 $YAD_PID; source /home/pi/hotspot-tools2/functions; RESTORE"' \
