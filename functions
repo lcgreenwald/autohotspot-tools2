@@ -79,6 +79,67 @@ fi
 }
 
 #--------------------------------------------------
+#	update IP Address
+#--------------------------------------------------
+ipaddress(){
+#script to modify the hotspot IP address
+#and the range of ip addresses assigned
+#by the hotspot DHCP server
+#20200223 km4ack
+#20200308 wb0sio - Modified manage-ip to accept a full nnn.nnn.nnn.nnn IP address
+
+#20200308 wb0sio
+TimeStamp=$(date +%Y%m%d%H%M%S)
+
+sudo cp /usr/bin/autohotspotN /usr/bin/autohotspotN.bkup.$TimeStamp
+#echo "/usr/bin/autohotspotN backup created"
+
+sudo cp /etc/dnsmasq.conf /etc/dnsmasq.conf.bkup$TimeStamp
+#echo "/etc/dnsmasq.conf backup created"
+
+NEWIP=$(yad --form --center --width 500 --height 500 --separator="|" --item-separator="|" --title="Name-Password" \
+--image $HOME/hotspot-tools2/logo.png --window-icon=$HOME/hotspot-tools2/logo.png --image-on-top --text-align=center \
+--text "Current IP Address shown below.\rChange as desired and press OK" \
+--field="Hotspot Name" "$CURRENTNAME" \
+
+#update name & password
+NEWIPADDR=$(echo $NEWIP | awk -F "|" '{print $1}')
+NEWNETSTRING=${$NEWIPADDR%.*}
+if [ -z "$NEWIPADDR" ]; then
+$MAIN
+exit
+else
+HSNETSTRING=${$HSIP%.*}
+#### End wb0sio addition
+
+if [ $IPans = 'y' ] || [ $IPans = 'Y' ]
+then
+#set new ip for autohotspotN
+wifidevtag='"$wifidev"'
+sudo sed -i "s/ip a add $HSIP/ip a add $IPaddress\/24 brd + dev $wifidevtag/" /usr/bin/autohotspotN
+#set new ip for dnsmasq.conf
+sudo sed -i "s/dhcp-range=$HSNETSTRING$/dhcp-range=$HSNETSTRING.150,$HSNETSTRING.200,255.255.255.0,24h/" /etc/dnsmasq.conf
+sudo sed -i "s/dhcp-option=3,$HSIP$/dhcp-option=3,use IP address $IPaddress in VNC to connect/" /etc/dnsmasq.conf
+sudo sed -i "s/address=\/email.com\/$HSIP$/address=\/email.com\/$NEWIPADDR/" /etc/dnsmasq.conf
+
+
+#give option to reboot
+yad --text="After connecting to your hotspot wifi\ruse IP address use IP address $IPaddress in VNC to connect in VNC to connect\rReboot required for changes to take effect" --center --width 300 --height 100 --title="Reboot?" \
+--button="Reboot":1 \
+--button="Cancel":2
+ANS=$?
+
+	if [ "$ANS" = 1 ]; then
+	reboot
+	elif [ "$ANS" = 2 ]; then
+	$MAIN
+	exit
+	fi
+fi
+
+]
+
+#--------------------------------------------------
 #		run hotspot
 #--------------------------------------------------
 hotspot(){
