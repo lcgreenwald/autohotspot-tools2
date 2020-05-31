@@ -509,6 +509,7 @@ NEWIP=$(yad --form --center --width 500 --height 500 --separator="|" --item-sepa
 --text "Current IP Address shown below.\rChange as desired and press OK" \
 --field="IP address" "$HSIP")
 
+HSNETSTRING=${HSIP%.*}
 #update IP address
 NEWIPADDR=$(echo $NEWIP | awk -F "|" '{print $1}')
 NEWNETSTRING=${NEWIPADDR%.*}
@@ -516,15 +517,11 @@ if [ -z "$NEWIPADDR" ]; then
 $MAIN
 exit
 else
-HSNETSTRING=${HSIP%.*}
-#### End wb0sio addition
-
 #set new ip for autohotspotN
-wifidevtag='"$wifidev"'
-sudo sed -i "s/ip a add $HSIP/ip a add $NEWIPADDR\/24 brd + dev $wifidevtag/" /usr/bin/autohotspotN
+sudo sed -i "s/ip a add $HSIP/ip a add $NEWIPADDR/" /usr/bin/autohotspotN
 #set new ip for dnsmasq.conf
-sudo sed -i "s/dhcp-range=$HSNETSTRING$/dhcp-range=$NEWNETSTRING.150,$NEWNETSTRING.200,255.255.255.0,12h/" /etc/dnsmasq.conf
-sudo sed -i "s/dhcp-option=3,$HSIP$/dhcp-option=3,use IP address $NEWIPADDR in VNC to connect/" /etc/dnsmasq.conf
+sudo sed -i "s/dhcp-range=$HSNETSTRING.150,$HSNETSTRING.200/dhcp-range=$NEWNETSTRING.150,$NEWNETSTRING.200/" /etc/dnsmasq.conf
+sudo sed -i "s/dhcp-option=3,$HSIP$/dhcp-option=3,$NEWIPADDR/" /etc/dnsmasq.conf
 sudo sed -i "s/address=\/email.com\/$HSIP$/address=\/email.com\/$NEWIPADDR/" /etc/dnsmasq.conf
 
 yad --text="After connecting to your hotspot wifi\ruse IP address $NEWIPADDR\rin VNC to connect. " --center --width 300 --height 100 --title="New Hotspot IP" \
@@ -534,17 +531,3 @@ $MAIN &
 exit
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
