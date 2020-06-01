@@ -488,21 +488,19 @@ exit
 #--------------------------------------------------
 #	update IP Address
 #--------------------------------------------------
+# 20200529 - WB0SIO
+# 20200601 - WB0SIO - Updates to "IP Address Updated" popup
+#--------------------------------------------------
 ipaddress(){
 #script to modify the hotspot IP address
 #and the range of ip addresses assigned
 #by the hotspot DHCP server
-#20200223 km4ack
-#20200308 wb0sio - Modified manage-ip to accept a full nnn.nnn.nnn.nnn IP address
-
-#20200308 wb0sio
 TimeStamp=$(date +%Y%m%d%H%M%S)
-
+#create /usr/bin/autohotspotN backup
 sudo cp /usr/bin/autohotspotN /usr/bin/autohotspotN.bkup.$TimeStamp
-#echo "/usr/bin/autohotspotN backup created"
-
+#create /etc/dnsmasq.conf backup
 sudo cp /etc/dnsmasq.conf /etc/dnsmasq.conf.bkup$TimeStamp
-#echo "/etc/dnsmasq.conf backup created"
+
 
 NEWIP=$(yad --form --center --width 500 --height 500 --separator="|" --item-separator="|" --title="Name-Password" \
 --image $HOME/hotspot-tools2/logo.png --window-icon=$HOME/hotspot-tools2/logo.png --image-on-top --text-align=center \
@@ -524,7 +522,9 @@ sudo sed -i "s/dhcp-range=$HSNETSTRING.150,$HSNETSTRING.200/dhcp-range=$NEWNETST
 sudo sed -i "s/dhcp-option=3,$HSIP$/dhcp-option=3,$NEWIPADDR/" /etc/dnsmasq.conf
 sudo sed -i "s/address=\/email.com\/$HSIP$/address=\/email.com\/$NEWIPADDR/" /etc/dnsmasq.conf
 
-yad --text="After connecting to your hotspot wifi\ruse IP address $NEWIPADDR\rin VNC to connect. " --center --width 300 --height 100 --title="New Hotspot IP" \
+yad --form --center --width 525 --height 50 --separator="|" --item-separator="|" --title="IP Address Updated" \
+--image $HOME/hotspot-tools2/logo.png --window-icon=$HOME/hotspot-tools2/logo.png --image-on-top --text-align=center \
+--text="After connecting to your hotspot wifi,\ruse IP address $NEWIPADDR in VNC to connect.\rYou may need to reboot your Pi if the Hotspot is active." \
 --button=gtk-ok
 fi
 $MAIN &
