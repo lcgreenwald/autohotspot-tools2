@@ -13,4 +13,4 @@ Execute the commands below to install.
      git clone https://github.com/lcgreenwald/autohotspot-tools2.git $HOME/hotspot-tools2
      sudo cp -f ~/hotspot-tools2/hstools.desktop /usr/share/applications/hotspot-tools.desktop
      
-You will now have a shortcut to the application on your desktop. Double click the icon and choose "Execute" when prompted.     
+You will now have a shortcut to the application in the Hamradio section of the main menu.     
