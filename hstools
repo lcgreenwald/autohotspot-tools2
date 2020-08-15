@@ -6,6 +6,7 @@
 
 
 MYPATH=$HOME/hotspot-tools2
+VERSION=$(cat $MYPATH/changelog | grep version= | sed 's/version=//')
 
 source $MYPATH/functions
 
@@ -17,7 +18,7 @@ exit
 fi
 
 
-yad --form --width=400 --text="<b>HotSpot Tools</b> by KM4ACK" --text-align=center --center --title="HotSpot Tools" --text-align=center \
+yad --form --width=400 --text="<b>HotSpot Tools\rversion $VERSION</b>\rby KM4ACK" --text-align=center --center --title="HotSpot Tools" --text-align=center \
 --image $HOME/hotspot-tools2/logo.png --window-icon=$HOME/hotspot-tools2/logo.png --image-on-top \
 --field="STATUS":RO "$HS" \
 --field="STATE":RO "$HSS" \

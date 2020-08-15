@@ -1,1 +1,8 @@
-version=2.0.0
+version=2.0.1
+
+2.0.1
+Minor fixes to text messages.
+
+2.0.0
+Initial release
+Change IP AAddress was added to the KM4ACK script.

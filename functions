@@ -63,9 +63,9 @@ sudo sed -i "s/^ssid=.*$/ssid=$NEWNAME/" /etc/hostapd/hostapd.conf
 sudo sed -i "s/wpa_passphrase.*$/wpa_passphrase=$NEWPASS/" /etc/hostapd/hostapd.conf
 
 #give option to reboot
-yad --text="Reboot required for changes to take effect" --center --width 300 --height 100 --title="Reboot?" \
+yad --text="You may need to reboot your Pi if the Hotspot is active." --center --width 300 --height 100 --title="Reboot?" \
 --button="Reboot":1 \
---button="Cancel":2
+--button="OK":2
 ANS=$?
 
 	if [ "$ANS" = 1 ]; then
@@ -502,7 +502,7 @@ sudo cp /usr/bin/autohotspotN /usr/bin/autohotspotN.bkup.$TimeStamp
 sudo cp /etc/dnsmasq.conf /etc/dnsmasq.conf.bkup$TimeStamp
 
 
-NEWIP=$(yad --form --center --width 500 --height 500 --separator="|" --item-separator="|" --title="Name-Password" \
+NEWIP=$(yad --form --center --width 500 --height 500 --separator="|" --item-separator="|" --title="Update IP Address by WB0SIO" \
 --image $HOME/hotspot-tools2/logo.png --window-icon=$HOME/hotspot-tools2/logo.png --image-on-top --text-align=center \
 --text "Current IP Address shown below.\rChange as desired and press OK" \
 --field="IP address" "$HSIP")
@@ -525,7 +525,18 @@ sudo sed -i "s/address=\/email.com\/$HSIP$/address=\/email.com\/$NEWIPADDR/" /et
 yad --form --center --width 525 --height 50 --separator="|" --item-separator="|" --title="IP Address Updated" \
 --image $HOME/hotspot-tools2/logo.png --window-icon=$HOME/hotspot-tools2/logo.png --image-on-top --text-align=center \
 --text="After connecting to your hotspot wifi,\ruse IP address $NEWIPADDR in VNC to connect.\rYou may need to reboot your Pi if the Hotspot is active." \
---button=gtk-ok
+#--button=gtk-ok
+
+--button="Reboot":1 \
+--button="OK":2
+ANS=$?
+
+	if [ "$ANS" = 1 ]; then
+	reboot
+	elif [ "$ANS" = 2 ]; then
+	$MAIN
+	exit
+	fi
 fi
 $MAIN &
 exit
