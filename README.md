@@ -10,7 +10,9 @@ YAD is required for this script. Those running Build-a-Pi already have YAD insta
 Execute the commands below to install.
 
      cd
+		 rm -rf $HOME/hotspot-tools2
+     rm -rf hotspot-tools2
      git clone https://github.com/lcgreenwald/autohotspot-tools2.git $HOME/hotspot-tools2
-     sudo cp -f ~/hotspot-tools2/hstools.desktop /usr/share/applications/hotspot-tools.desktop
+     bash $HOME/hotspot-tools2/autohotspot-tools2-install.sh
      
 You will now have a shortcut to the application in the Hamradio section of the main menu.     
