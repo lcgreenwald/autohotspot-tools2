@@ -14,7 +14,6 @@ If the km4ack version of hotspot-tools2 is installed, run this command.
 Execute the commands below to install.
 
 	cd
-	rm -rf $HOME/hotspot-tools2
 	git clone https://github.com/lcgreenwald/autohotspot-tools2.git $HOME/hotspot-tools2
 	bash $HOME/hotspot-tools2/autohotspot-tools2-install.sh
      
