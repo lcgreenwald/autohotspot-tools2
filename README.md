@@ -15,6 +15,9 @@ Execute the commands below to install.
 
 	cd
 	git clone https://github.com/lcgreenwald/autohotspot-tools2.git $HOME/hotspot-tools2
-	bash $HOME/hotspot-tools2/autohotspot-tools2-install.sh
+
+If the km4ack version of hotspot-tools2 is NOT installed, also run this command.
+
+	bash $HOME/hotspot-tools2/hotspot-tools2-install.sh
      
 You will now have a shortcut to the application in the Hamradio section of the main menu.     
