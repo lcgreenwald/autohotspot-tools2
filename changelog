@@ -1,8 +1,9 @@
 version=2.0.1
+author=wb0sio
 
 2.0.1
 Minor fixes to text messages.
 
 2.0.0
 Initial release
-Change IP AAddress was added to the KM4ACK script.
+Change IP Address was added to the KM4ACK script.
